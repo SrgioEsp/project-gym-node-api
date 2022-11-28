@@ -67,7 +67,7 @@ sessionRouter.put('/:id', (request, response, next) => {
 	const session = request.body;
 
 	const newSessionInfo = {
-		userId: session.userId,
+		user: session.user,
 		name: session.name,
 		trainees: session.trainees,
 		days: session.days,

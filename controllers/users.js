@@ -7,11 +7,11 @@ const User = require('../models/User');
 usersRouter.get('/', (request, response, next) => {
 	User.find({})
 		.populate('sessions', {
-			days: 1,
-			name: 1,
-			trainees: 1,
+			user: 0,
 		})
-		.populate('trainees')
+		.populate('trainees', {
+			user: 0,
+		})
 		.then((res) => response.json(res))
 		.catch((error) => next(error));
 });
@@ -23,14 +23,19 @@ usersRouter.get('/:id', (request, response, next) => {
 	const id = request.params.id;
 	User.findById(id)
 		.populate('sessions', {
-			days: 1,
-			name: 1,
-			trainees: 1,
+			user: 0,
 		})
-		.populate('trainees')
+		.populate('trainees', {
+			user: 0,
+		})
 		.then((user) => {
 			if (user) {
-				response.json(user);
+				response.json({
+					id: user.id,
+					name: user.name,
+					trainees: user.trainees,
+					sessions: user.sessions,
+				});
 			} else {
 				response.status(404).end();
 			}

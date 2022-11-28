@@ -80,7 +80,7 @@ traineeRouter.put('/:id', (request, response, next) => {
 	const trainee = request.body;
 
 	const newTraineeInfo = {
-		userId: trainee.userId,
+		user: trainee.user,
 		name: trainee.name,
 		surname: trainee.surname,
 		birthDate: trainee.birthDate,

@@ -2,4 +2,4 @@ GET http://localhost:3002/api/trainees
 
 ###
 
-GET http://localhost:3002/api/trainees/63722e38148ee4eb5de38280
+GET http://localhost:3002/api/trainees/636bc83bb1fe5f54575a3f7d
