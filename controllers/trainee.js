@@ -1,5 +1,6 @@
 const traineeRouter = require('express').Router();
 const Trainee = require('../models/Trainee');
+const User = require('../models/User');
 
 /**
  * GET a trainee by id
@@ -22,17 +23,19 @@ traineeRouter.get('/:id', (request, response, next) => {
 /**
  * POST data trainee and create a new trainee
  */
-traineeRouter.post('/', (request, response, next) => {
+traineeRouter.post('/', async (request, response, next) => {
 	const trainee = request.body;
 
-	if (!trainee || !trainee.userId) {
+	if (!trainee || !trainee.user) {
 		return response.status(400).json({
 			error: 'trainee data is missing',
 		});
 	}
 
+	const user = await User.findById(trainee.user);
+
 	const newTrainee = new Trainee({
-		userId: trainee.userId,
+		user: user._id,
 		name: trainee.name,
 		surname: trainee.surname,
 		birthDate: trainee.birthDate,
@@ -44,10 +47,17 @@ traineeRouter.post('/', (request, response, next) => {
 		activationDate: new Date(),
 		expiryDate: null,
 	});
-	newTrainee
-		.save()
-		.then((saveTrainee) => response.json(saveTrainee))
-		.catch((error) => next(error));
+
+	try {
+		const saveTrainee = await newTrainee.save();
+
+		user.trainees = user.trainees.concat(saveTrainee);
+		await user.save();
+
+		response.json(saveTrainee);
+	} catch (error) {
+		next(error);
+	}
 });
 
 /**

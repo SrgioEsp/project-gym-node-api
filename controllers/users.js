@@ -11,6 +11,7 @@ usersRouter.get('/', (request, response, next) => {
 			name: 1,
 			trainees: 1,
 		})
+		.populate('trainees')
 		.then((res) => response.json(res))
 		.catch((error) => next(error));
 });
@@ -26,6 +27,7 @@ usersRouter.get('/:id', (request, response, next) => {
 			name: 1,
 			trainees: 1,
 		})
+		.populate('trainees')
 		.then((user) => {
 			if (user) {
 				response.json(user);
@@ -48,6 +50,8 @@ usersRouter.post('/', (request, response, next) => {
 	}
 
 	User.find({ name, password })
+		.populate('sessions', { user: 0 })
+		.populate('trainees', { user: 0 })
 		.then((usu) => {
 			const user = {
 				id: usu[0].id,
