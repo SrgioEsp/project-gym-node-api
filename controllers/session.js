@@ -1,5 +1,6 @@
 const sessionRouter = require('express').Router();
 const Session = require('../models/Session');
+const User = require('../models/User');
 
 /**
  * GET a session by id
@@ -16,25 +17,34 @@ sessionRouter.get('/:id', (request, response, next) => {
 /**
  * POST data session and create a session
  */
-sessionRouter.post('/', (request, response, next) => {
+sessionRouter.post('/', async (request, response, next) => {
 	const body = request.body;
+
 	if (!body) {
 		response.status(400).json({
 			error: 'data failed',
 		});
 	}
+
+	const user = await User.findById(body.user);
+
 	const newSession = new Session({
-		userId: body.userId,
+		user: user._id,
 		name: body.name,
 		trainees: body.trainees,
 		days: body.days,
 	});
-	newSession
-		.save()
-		.then((res) => {
-			response.json(res);
-		})
-		.catch((error) => next(error));
+
+	try {
+		const saveSession = await newSession.save();
+
+		user.sessions = user.sessions.concat(saveSession._id);
+		await user.save();
+
+		response.json(saveSession);
+	} catch (error) {
+		next(error);
+	}
 });
 
 /**
@@ -57,7 +67,7 @@ sessionRouter.put('/:id', (request, response, next) => {
 	const session = request.body;
 
 	const newSessionInfo = {
-		userId: session.userId,
+		user: session.user,
 		name: session.name,
 		trainees: session.trainees,
 		days: session.days,

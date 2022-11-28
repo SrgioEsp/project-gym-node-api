@@ -2,8 +2,8 @@ POST http://localhost:3002/api/user
 Content-Type: application/json
 
 {
-    "name": "entrenador2",
-    "password": "test2"
+    "name": "entrenador4",
+    "password": "entrenador4"
 }
 
 ###
