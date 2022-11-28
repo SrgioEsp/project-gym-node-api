@@ -1,0 +1,11 @@
+PUT http://localhost:3002/api/trainee/636c0c31020040c70cf80f20
+Content-Type: application/json
+
+{
+    "userId": "636c0bf8020040c70cf80f17",
+    "name": "editado",
+    "date": "10/11/2022",
+    "edad": "21",
+    "peso": "50",
+    "altura": "132"
+}

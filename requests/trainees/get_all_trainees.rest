@@ -1,0 +1,5 @@
+GET http://localhost:3002/api/trainees
+
+###
+
+GET http://localhost:3002/api/trainees/63722e38148ee4eb5de38280

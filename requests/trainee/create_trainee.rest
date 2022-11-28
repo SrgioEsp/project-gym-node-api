@@ -1,0 +1,21 @@
+POST http://localhost:3002/api/trainee
+Content-Type: application/json
+
+{
+    "userId": "636bc83bb1fe5f54575a3f7d",
+    "name": "Álvaro",
+    "surname": "Espejo Illanes",
+    "birthDate": "31/01/2002",
+    "dni": "31872235P",
+	"gender": "M",
+	"weight": 75,
+	"height": 177
+}
+
+###
+
+POST http://localhost:3002/api/trainees
+Content-Type: application/json
+
+{
+}

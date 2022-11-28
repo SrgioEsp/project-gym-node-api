@@ -1,0 +1,25 @@
+// create a session
+POST http://localhost:3002/api/session
+Content-Type: application/json
+
+{
+    "userId": "636bc83bb1fe5f54575a3f7d",
+    "name": "Sesión",
+    "trainees": ["636c0877eaf67b109aff6441", "63722e38148ee4eb5de38280"],
+    "days": {
+        "weekdays": [
+            {
+                "day": "Lunes",
+                "startTime": "18:00",
+                "endTime": "19:00"
+            },
+            {
+                "day": "Martes",
+                "startTime": "18:00",
+                "endTime": "19:00"
+            }
+        ],
+        "extras": [],
+        "disabled": []
+    }
+}

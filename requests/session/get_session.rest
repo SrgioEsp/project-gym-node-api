@@ -1,0 +1,7 @@
+// get session filter by id
+GET http://localhost:3002/api/session/63720a01c7144a8a8c7aee5a
+
+###
+
+// get sessions filter by userId
+GET http://localhost:3002/api/sessions/636bc83bb1fe5f54575a3f7d

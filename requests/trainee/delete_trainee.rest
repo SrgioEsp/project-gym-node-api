@@ -1,0 +1,1 @@
+DELETE http://localhost:3002/api/trainee/637b4f9c52a930de246a6b23
