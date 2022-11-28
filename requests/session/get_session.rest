@@ -1,5 +1,5 @@
 // get session filter by id
-GET http://localhost:3002/api/session/63720a01c7144a8a8c7aee5a
+GET http://localhost:3002/api/session/63848e61a64d0f5fca84c1ab
 
 ###
 

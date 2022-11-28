@@ -6,6 +6,11 @@ const User = require('../models/User');
  */
 usersRouter.get('/', (request, response, next) => {
 	User.find({})
+		.populate('sessions', {
+			days: 1,
+			name: 1,
+			trainees: 1,
+		})
 		.then((res) => response.json(res))
 		.catch((error) => next(error));
 });
@@ -16,6 +21,11 @@ usersRouter.get('/', (request, response, next) => {
 usersRouter.get('/:id', (request, response, next) => {
 	const id = request.params.id;
 	User.findById(id)
+		.populate('sessions', {
+			days: 1,
+			name: 1,
+			trainees: 1,
+		})
 		.then((user) => {
 			if (user) {
 				response.json(user);
@@ -42,6 +52,8 @@ usersRouter.post('/', (request, response, next) => {
 			const user = {
 				id: usu[0].id,
 				name: usu[0].name,
+				sessions: usu[0].sessions,
+				trainees: usu[0].trainees,
 			};
 			response.json(user);
 		})

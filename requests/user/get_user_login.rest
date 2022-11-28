@@ -2,7 +2,7 @@ GET http://localhost:3002/api/users
 
 ###
 
-GET http://localhost:3002/api/users/636bc83bb1fe5f54575a3f7d
+GET http://localhost:3002/api/users/63848e52a64d0f5fca84c1a8
 
 
 ###
@@ -11,8 +11,8 @@ POST http://localhost:3002/api/users
 Content-Type: application/json
 
 {
-    "name" : "entrenador",
-    "password" : "test"
+    "name" : "entrenador3",
+    "password" : "entrenador3"
 }
 
 

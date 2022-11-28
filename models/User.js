@@ -3,6 +3,18 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
 	name: String,
 	password: String,
+	sessions: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Session',
+		},
+	],
+	trainees: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Trainee',
+		},
+	],
 });
 
 userSchema.set('toJSON', {
@@ -14,25 +26,5 @@ userSchema.set('toJSON', {
 });
 
 const User = mongoose.model('User', userSchema);
-
-// Trainee.find({})
-// 	.then((res) => {
-// 		console.log(res);
-// 		mongoose.connection.close();
-// 	})
-// 	.catch((err) => console.error(err));
-
-// const user = new User({
-// 	name: 'entrenador',
-// 	password: 'test',
-// });
-
-// user
-// 	.save()
-// 	.then((res) => {
-// 		console.log(res);
-// 		mongoose.connection.close();
-// 	})
-// 	.catch((err) => console.error(err));
 
 module.exports = User;

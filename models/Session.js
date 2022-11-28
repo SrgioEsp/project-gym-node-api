@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 
 const sessionsSchema = new mongoose.Schema({
-	userId: String,
+	user: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+	},
 	name: String,
 	trainees: [
 		{
