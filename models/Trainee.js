@@ -13,8 +13,11 @@ const traineeSchema = new mongoose.Schema({
 	weight: Number,
 	height: Number,
 	entryDate: Date,
-	activationDate: Date,
-	expiryDate: String,
+	permanence: {
+		activationDate: Date,
+		months: Number,
+		expiryDate: Date,
+	},
 });
 
 traineeSchema.set('toJSON', {

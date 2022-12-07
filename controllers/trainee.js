@@ -44,8 +44,16 @@ traineeRouter.post('/', async (request, response, next) => {
 		weight: trainee.weight || null,
 		height: trainee.height || null,
 		entryDate: new Date(),
-		activationDate: new Date(),
-		expiryDate: null,
+		permanence: {
+			activationDate: trainee.permanenceMonths !== 0 ? new Date() : null,
+			months: trainee.permanenceMonths,
+			expiryDate:
+				trainee.permanenceMonths !== 0
+					? new Date().setMonth(
+							new Date().getMonth() + trainee.permanenceMonths
+					  )
+					: null,
+		},
 	});
 
 	try {
@@ -88,6 +96,16 @@ traineeRouter.put('/:id', (request, response, next) => {
 		gender: trainee.gender,
 		weight: trainee.weight,
 		height: trainee.height,
+		permanence: {
+			activationDate: trainee.permanenceMonths !== 0 ? new Date() : null,
+			months: trainee.permanenceMonths,
+			expiryDate:
+				trainee.permanenceMonths !== 0
+					? new Date().setMonth(
+							new Date().getMonth() + trainee.permanenceMonths
+					  )
+					: null,
+		},
 	};
 
 	Trainee.findByIdAndUpdate(id, newTraineeInfo, { new: true })
