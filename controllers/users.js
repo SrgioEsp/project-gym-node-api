@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const usersRouter = require('express').Router();
 const User = require('../models/User');
 
@@ -46,27 +47,31 @@ usersRouter.get('/:id', (request, response, next) => {
 /**
  * POST data form and get login user
  */
-usersRouter.post('/', (request, response, next) => {
-	const { name, password } = request.body;
-	if (!name || !password) {
-		return response.status(401).json({
-			error: 'Usuario o contraseña incorrectos',
-		});
-	}
+usersRouter.post('/', async (request, response, next) => {
+	try {
+		const { name, password } = request.body;
 
-	User.find({ name, password })
-		.populate('sessions', { user: 0 })
-		.populate('trainees', { user: 0 })
-		.then((usu) => {
-			const user = {
-				id: usu[0].id,
-				name: usu[0].name,
-				sessions: usu[0].sessions,
-				trainees: usu[0].trainees,
-			};
-			response.json(user);
-		})
-		.catch((error) => next(error));
+		const user = await User.findOne({ name })
+			.populate('sessions', { user: 0 })
+			.populate('trainees', { user: 0 });
+		const passwordCorrect =
+			user === null ? false : await bcrypt.compare(password, user.password);
+
+		if (!passwordCorrect) {
+			response.status(401).send({
+				error: 'invalid user or password',
+			});
+		}
+
+		response.json({
+			id: user.id,
+			name: user.name,
+			sessions: user.sessions,
+			trainees: user.trainees,
+		});
+	} catch (error) {
+		return next(error);
+	}
 });
 
 module.exports = usersRouter;
