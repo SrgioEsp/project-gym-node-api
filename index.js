@@ -5,7 +5,6 @@ const express = require('express');
 const app = express();
 
 const cors = require('cors');
-const logger = require('./loggerMiddleWare');
 
 const notFound = require('./middleware/notFound.js');
 const handleErrors = require('./middleware/handleErrors.js');
@@ -22,7 +21,6 @@ const userRouter = require('./controllers/user');
  */
 app.use(cors());
 app.use(express.json());
-app.use(logger);
 
 /**
  * Endpoints
