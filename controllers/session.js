@@ -1,4 +1,5 @@
 const sessionRouter = require('express').Router();
+const userExtractor = require('../middleware/userExtractor');
 const Session = require('../models/Session');
 const User = require('../models/User');
 
@@ -17,7 +18,7 @@ sessionRouter.get('/:id', (request, response, next) => {
 /**
  * POST data session and create a session
  */
-sessionRouter.post('/', async (request, response, next) => {
+sessionRouter.post('/', userExtractor, async (request, response, next) => {
 	const body = request.body;
 
 	if (!body) {
@@ -50,7 +51,7 @@ sessionRouter.post('/', async (request, response, next) => {
 /**
  * DELETE session by id
  */
-sessionRouter.delete('/:id', (request, response, next) => {
+sessionRouter.delete('/:id', userExtractor, (request, response, next) => {
 	const id = request.params.id;
 	Session.findByIdAndDelete(id)
 		.then((res) => {
@@ -62,7 +63,7 @@ sessionRouter.delete('/:id', (request, response, next) => {
 /**
  * PUT session data and update session
  */
-sessionRouter.put('/:id', (request, response, next) => {
+sessionRouter.put('/:id', userExtractor, (request, response, next) => {
 	const id = request.params.id;
 	const session = request.body;
 

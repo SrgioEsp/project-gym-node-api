@@ -1,6 +1,8 @@
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const usersRouter = require('express').Router();
 const User = require('../models/User');
+const userExtractor = require('../middleware/userExtractor');
 
 /**
  * GET a list of users
@@ -20,8 +22,9 @@ usersRouter.get('/', (request, response, next) => {
 /**
  * GET user by id
  */
-usersRouter.get('/:id', (request, response, next) => {
-	const id = request.params.id;
+usersRouter.get('/:id', userExtractor, (request, response, next) => {
+	const id = request.userId;
+	const token = request.token;
 	User.findById(id)
 		.populate('sessions', {
 			user: 0,
@@ -36,6 +39,7 @@ usersRouter.get('/:id', (request, response, next) => {
 					name: user.name,
 					trainees: user.trainees,
 					sessions: user.sessions,
+					token,
 				});
 			} else {
 				response.status(404).end();
@@ -57,17 +61,25 @@ usersRouter.post('/', async (request, response, next) => {
 		const passwordCorrect =
 			user === null ? false : await bcrypt.compare(password, user.password);
 
-		if (!passwordCorrect) {
+		if (!(user && passwordCorrect)) {
 			response.status(401).send({
 				error: 'invalid user or password',
 			});
 		}
+
+		const userForToken = {
+			id: user.id,
+			name: user.name,
+		};
+
+		const token = jwt.sign(userForToken, process.env.SECRET);
 
 		response.json({
 			id: user.id,
 			name: user.name,
 			sessions: user.sessions,
 			trainees: user.trainees,
+			token,
 		});
 	} catch (error) {
 		return next(error);

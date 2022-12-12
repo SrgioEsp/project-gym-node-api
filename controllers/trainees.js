@@ -1,4 +1,5 @@
 const traineesRouter = require('express').Router();
+const userExtractor = require('../middleware/userExtractor');
 const Trainee = require('../models/Trainee');
 
 /**
@@ -13,7 +14,7 @@ traineesRouter.get('/', (request, response, next) => {
 /**
  * GET a list of trainees by userId
  */
-traineesRouter.get('/:userId', (request, response, next) => {
+traineesRouter.get('/:userId', userExtractor, (request, response, next) => {
 	const userId = request.params.userId;
 
 	Trainee.find({ userId })

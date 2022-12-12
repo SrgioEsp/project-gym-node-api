@@ -1,4 +1,5 @@
 const sessionsRouter = require('express').Router();
+const userExtractor = require('../middleware/userExtractor');
 const Session = require('../models/Session');
 
 const setSessionType = (session) => {
@@ -42,7 +43,7 @@ sessionsRouter.get('/', (request, response, next) => {
 /**
  * GET a list of sessions filter by userId
  */
-sessionsRouter.get('/:userId', (request, response, next) => {
+sessionsRouter.get('/:userId', userExtractor, (request, response, next) => {
 	const userId = request.params.userId;
 	Session.find({ userId })
 		.then((res) => {
