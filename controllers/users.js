@@ -72,7 +72,7 @@ usersRouter.post('/', async (request, response, next) => {
 			name: user.name,
 		};
 
-		const token = jwt.sign(userForToken, 'projectgym');
+		const token = jwt.sign(userForToken, process.env.SECRET);
 
 		response.json({
 			id: user.id,

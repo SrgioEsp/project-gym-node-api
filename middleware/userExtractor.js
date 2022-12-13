@@ -9,7 +9,7 @@ module.exports = (request, response, next) => {
 		token = authorization.substring(7);
 	}
 
-	const decodedToken = jwt.verify(token, 'projectgym');
+	const decodedToken = jwt.verify(token, process.env.SECRET);
 
 	if (!token || !decodedToken.id) {
 		return response.status(401).json({ error: 'token missing or invalid' });
