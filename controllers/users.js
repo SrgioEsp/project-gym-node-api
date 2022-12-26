@@ -15,6 +15,7 @@ usersRouter.get('/', (request, response, next) => {
 		.populate('trainees', {
 			user: 0,
 		})
+		.populate('training', { user: 0 })
 		.then((res) => response.json(res))
 		.catch((error) => next(error));
 });
@@ -32,6 +33,7 @@ usersRouter.get('/:id', userExtractor, (request, response, next) => {
 		.populate('trainees', {
 			user: 0,
 		})
+		.populate('training', { user: 0 })
 		.then((user) => {
 			if (user) {
 				response.json({
@@ -39,6 +41,7 @@ usersRouter.get('/:id', userExtractor, (request, response, next) => {
 					name: user.name,
 					trainees: user.trainees,
 					sessions: user.sessions,
+					training: user.training,
 					token,
 				});
 			} else {
@@ -57,7 +60,8 @@ usersRouter.post('/', async (request, response, next) => {
 
 		const user = await User.findOne({ name })
 			.populate('sessions', { user: 0 })
-			.populate('trainees', { user: 0 });
+			.populate('trainees', { user: 0 })
+			.populate('training', { user: 0 });
 		const passwordCorrect =
 			user === null ? false : await bcrypt.compare(password, user.password);
 
@@ -79,6 +83,7 @@ usersRouter.post('/', async (request, response, next) => {
 			name: user.name,
 			sessions: user.sessions,
 			trainees: user.trainees,
+			training: user.training,
 			token,
 		});
 	} catch (error) {
