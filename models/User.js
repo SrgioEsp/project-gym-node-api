@@ -16,6 +16,12 @@ const userSchema = new mongoose.Schema({
 			ref: 'Trainee',
 		},
 	],
+	training: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'TrainingSession',
+		},
+	],
 });
 
 userSchema.set('toJSON', {

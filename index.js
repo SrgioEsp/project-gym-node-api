@@ -15,6 +15,7 @@ const traineesRouter = require('./controllers/trainees');
 const traineeRouter = require('./controllers/trainee');
 const usersRouter = require('./controllers/users');
 const userRouter = require('./controllers/user');
+const trainingRouter = require('./controllers/training');
 
 /**
  * Middlewares
@@ -52,6 +53,10 @@ app.use('/api/sessions', sessionsRouter);
 
 // ---   ---   ---   ---   SESSION   ---   ---   ---   ---
 app.use('/api/session', sessionRouter);
+// ----------------------------------------------------------------
+
+// ---   ---   ---   ---   TRAINING   ---   ---   ---   ---
+app.use('/api/training', trainingRouter);
 // ----------------------------------------------------------------
 
 // Middleware

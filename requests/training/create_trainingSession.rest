@@ -1,0 +1,10 @@
+POST http://localhost:3002/api/training
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOTFjNGRiNDUzNWQ4MTgyZTdjNmQ3NCIsIm5hbWUiOiJlbnRyZW5hZG9yIiwiaWF0IjoxNjcxNjEzODE2fQ.9gOHuUMlNc8kDeMTVFsPp0Tc7bsBQsq-v0nDBiUJo1U
+
+{
+    "user": "63848e52a64d0f5fca84c1a8",
+    "name": "Entrenamiento",
+    "sessions": ["639b2ae3c421c5dd2665fdab", "639c72b1452bb3234f360173"],
+    "exercises": ["Tablón", "Saltos de tijera", "Twist Ruso"]
+}
